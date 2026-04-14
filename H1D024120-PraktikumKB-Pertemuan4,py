@@ -1,0 +1,57 @@
+# Knowledge Base Kerusakan Komputer
+# Disimpan dalam Dictionary agar mudah dikelola dan dikembangkan
+knowledge_base = {
+    "RAM Rusak": {
+        "gejala": ["layar biru (BSOD)", "bunyi beep berulang", "sering restart sendiri"],
+        "solusi": "Coba bersihkan pin emas RAM dengan penghapus atau pindahkan ke slot lain."
+    },
+    "Power Supply (PSU) Lemah": {
+        "gejala": ["komputer sering mati mendadak", "kipas PSU berisik", "tidak kuat mengangkat beban GPU"],
+        "solusi": "Cek tegangan PSU dengan multimeter atau ganti dengan PSU yang memiliki daya lebih besar/stabil."
+    },
+    "Overheat (Prosesor)": {
+        "gejala": ["laptop panas menyengat", "performa lambat (throttling)", "mati sendiri saat buka aplikasi berat"],
+        "solusi": "Bersihkan debu pada heatsink dan ganti thermal paste pada prosesor."
+    },
+    "VGA Bermasalah": {
+        "gejala": ["tampilan layar bergaris (artifact)", "warna layar tidak normal", "driver sering crash saat main game"],
+        "solusi": "Update driver ke versi terbaru atau cek suhu GPU. Jika bergaris permanen, mungkin perlu reball/ganti chip."
+    },
+    "Harddisk Corrupt": {
+        "gejala": ["proses booting sangat lama", "muncul pesan error disk", "file sering tidak bisa dibuka"],
+        "solusi": "Lakukan scanning disk (chkdsk) atau segera backup data dan ganti ke SSD agar lebih cepat dan awet."
+    }
+}
+
+def diagnosa_kerusakan():
+    print("=== Sistem Pakar Diagnosa Kerusakan Laptop/Komputer ===")
+    print("Masukkan gejala yang Anda alami (pisahkan dengan koma):")
+    print("Contoh: layar biru (BSOD), sering restart sendiri")
+    print("-" * 50)
+    
+    # Mengambil input dan membersihkan spasi berlebih
+    input_pengguna = input("Input Gejala: ").lower()
+    gejala_pengguna = [g.strip() for g in input_pengguna.split(",")]
+    
+    hasil_ditemukan = False
+    
+    # Mesin Inferensi: Mencari kecocokan gejala di Knowledge Base
+    for kerusakan, detail in knowledge_base.items():
+        # Mengecek apakah gejala pengguna ada di daftar gejala kerusakan tertentu
+        # Menggunakan set intersection untuk mencari kesamaan
+        cocok = set(gejala_pengguna) & set([g.lower() for g in detail["gejala"]])
+        
+        if cocok:
+            print(f"\n[HASIL DIAGNOSA]")
+            print(f"Jenis Kerusakan : {kerusakan}")
+            print(f"Gejala Terdeteksi: {', '.join(cocok)}")
+            print(f"Solusi Singkat  : {detail['solusi']}")
+            hasil_ditemukan = True
+            break # Hentikan pencarian setelah ketemu yang paling cocok
+
+    if not hasil_ditemukan:
+        print("\n[INFO] Gejala yang Anda masukkan tidak cocok dengan data kerusakan di sistem kami.")
+        print("Saran: Segera bawa ke tempat servis profesional untuk pemeriksaan lebih lanjut.")
+
+if __name__ == "__main__":
+    diagnosa_kerusakan()
